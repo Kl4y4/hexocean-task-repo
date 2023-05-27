@@ -13,10 +13,12 @@
 <body>
     
     <div id="root"></div>
-    <script src="./app.jsx" type="text/babel"></script>
+    <script src="./app.tsx" type="text/babel"></script>
     <script type="text/babel">
-      const container = document.getElementById('root')
-      ReactDOM.render(<App />, container)
+      const ReactDOM = window.ReactDOM;
+      const rootNode = document.getElementById('root');
+      const root = ReactDOM.createRoot(rootNode);
+      root.render(<App />);
     </script>
 
 </body>
