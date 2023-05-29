@@ -9,15 +9,16 @@ function App() {
 
 const Form = () => {
 
-  const [dishProperties, setProperties] = useState(['', '', '', '']);
+  const [dishProperties, setProperties] = useState(['', '', 'pizza', '', '']);
 
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(dishProperties);
   }
 
-  const onChange = (e, i) => {
-    const updatedDish = dishProperties.map((el, ind) => ind == i ? e.target.value : el);
+  const onChange = (e, updatedIndex) => {
+    const updatedDish = dishProperties.map((el, ind) => ind == updatedIndex ? e.target.value : el);
+    if (dishProperties[2] != "pizza") updatedDish[5] = '';
     setProperties(updatedDish);
   }
 
@@ -33,9 +34,17 @@ const Form = () => {
         <option value="soup">soup</option>
         <option value="sandwich">sandwich</option>
       </select>
+
+      {dishProperties[2] == "pizza" && 
+        <>
+          <input type="number" value={dishProperties[4]} onChange={(e) => {onChange(e, 4)}} required />
+          <input type="number" value={dishProperties[5]} onChange={(e) => {onChange(e, 5)}} required />
+        </>
+      }
+      {dishProperties[2] == "soup" && <input type="number" value={dishProperties[4]} onChange={(e) => {onChange(e, 4)}} required />}
+      {dishProperties[2] == "sandwich" && <input type="number" value={dishProperties[4]} onChange={(e) => {onChange(e, 4)}} required />}
+
       <input type="submit" value="Send" />
     </form>
   </>
 }
-
-
