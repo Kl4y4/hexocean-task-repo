@@ -1,4 +1,5 @@
 import React from 'react';
+import Form from './Form.tsx'
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
         <p>
           Hello world!
         </p>
+        <Form />
       </header>
     </div>
   );
