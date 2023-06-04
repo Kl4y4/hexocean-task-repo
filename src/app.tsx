@@ -2,6 +2,13 @@ const React = window.React;
 const { useState, useReducer } = window.React;
 const { Dish, Pizza, Sandwich, Soup } = window.ts;
 
+function deleteOptionals(state, propertiesToDelete) {
+  propertiesToDelete.forEach(el => {
+    delete state[el];
+  })
+  return state;
+}
+
 function reducer(state, action) {
   switch (action.property) {
     case 'name':
@@ -11,22 +18,16 @@ function reducer(state, action) {
     case 'type':
       return { ...state, type: action.payload.value}
     case 'no_of_slices':
-      delete state.spiciness_scale;
-      delete state.slices_of_bread;
+      state = deleteOptionals(state, ['spiciness_scale', 'slices_of_bread']);
       return { ...state, no_of_slices: action.payload.value}
     case 'diameter':
-      delete state.spiciness_scale;
-      delete state.slices_of_bread;
+      state = deleteOptionals(state, ['spiciness_scale', 'slices_of_bread']);
       return { ...state, diameter: action.payload.value}
     case 'spiciness_scale':
-      delete state.no_of_slices;
-      delete state.diameter;
-      delete state.slices_of_bread;
+      state = deleteOptionals(state, ['no_of_slices', 'diameter', 'slices_of_bread']);
       return { ...state, spiciness_scale: action.payload.value}
     case 'slices_of_bread':
-      delete state.no_of_slices;
-      delete state.diameter;
-      delete state.spiciness_scale;
+      state = deleteOptionals(state, ['no_of_slices', 'diameter', 'spiciness_scale']);
       return { ...state, slices_of_bread: action.payload.value}
     default:
       return state;
