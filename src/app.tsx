@@ -1,4 +1,6 @@
+const React = window.React;
 const { useState } = window.React;
+const { Dish, Pizza, Sandwich, Soup } = window.ts;
 
 function App() {
   return <>
@@ -9,41 +11,66 @@ function App() {
 
 const Form = () => {
 
-  const [dishProperties, setProperties] = useState(['', '', 'pizza', '', '']);
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(dishProperties);
+  const [name, setName] = useState('');
+  const [preparation_time, setPreparationTime] = useState('');
+  const [type, setType] = useState('');
+  const [no_of_slices, setNoOfSlices] = useState(1);
+  const [diameter, setDiameter] = useState(1);
+  const [spiciness_scale, setSpicinessScale] = useState(1);
+  const [slices_of_bread, setSlicesOfBread] = useState(1);
+  const setters = {
+    setName,
+    setPreparationTime,
+    setType,
+    setNoOfSlices,
+    setDiameter,
+    setSpicinessScale,
+    setSlicesOfBread
   }
 
-  const onChange = (e, updatedIndex) => {
-    const updatedDish = dishProperties.map((el, ind) => ind == updatedIndex ? e.target.value : el);
-    if (dishProperties[2] != "pizza") updatedDish[5] = '';
-    setProperties(updatedDish);
+  const currentDish : typeof Dish = {
+    name,
+    preparation_time,
+    type,
+    no_of_slices,
+    diameter,
+    spiciness_scale,
+    slices_of_bread
+  }
+
+  const onSubmit = (e : React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    console.log(currentDish);
+  }
+
+  const onChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+    setters["set" + e.target.name](e.target.value);
+    console.log();
   }
 
   return <>
-    <form onSubmit={onSubmit}>
-      <input type="text" value={dishProperties[0]} onChange={(e) => {onChange(e, 0)}} />
-      <input type="time" list="preparation-time-suggestions" 
-      step="1" min="00:00:01"
-      value={dishProperties[1]} onChange={(e) => {onChange(e, 1)}} />
-      <select
-      value={dishProperties[2]} onChange={(e) => {onChange(e, 2)}}>
+    <form onSubmit={onSubmit} id="form">
+      <input name="Name" type="text"
+      value={name} onChange={onChange} />
+      <input name="PreparationTime" type="time" list="preparation-time-suggestions" 
+      step="1" min="00:00:01" 
+      value={preparation_time} onChange={onChange} />
+      <select name="Type"
+      value={type} onChange={onChange}>
         <option value="pizza">pizza</option>
         <option value="soup">soup</option>
         <option value="sandwich">sandwich</option>
       </select>
 
-      {dishProperties[2] == "pizza" && 
+      {type == "pizza" && 
         <>
-          <input type="number" value={dishProperties[4]} onChange={(e) => {onChange(e, 4)}} required />
-          <input type="number" value={dishProperties[5]} onChange={(e) => {onChange(e, 5)}} required />
+          <input name="NoOfSlices" type="number" value={no_of_slices} onChange={onChange} required />
+          <input name="Diameter" type="number" value={diameter} onChange={onChange} required />
         </>
       }
-      {dishProperties[2] == "soup" && <input type="number" value={dishProperties[4]} onChange={(e) => {onChange(e, 4)}} required />}
-      {dishProperties[2] == "sandwich" && <input type="number" value={dishProperties[4]} onChange={(e) => {onChange(e, 4)}} required />}
-
+      {type == "soup" && <input name="SpicinessScale" type="number" value={spiciness_scale} onChange={onChange} required />}
+      {type == "sandwich" && <input name="SlicesOfBread" type="number" value={slices_of_bread} onChange={onChange} required />}
+      
       <input type="submit" value="Send" />
     </form>
   </>
