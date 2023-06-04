@@ -20,35 +20,43 @@ function deleteOptionals(state, propertiesToDelete) {
 }
 
 function reducer(state, action) {
+  
   switch (action.property) {
     case PROPERTIES.NAME:
       return { ...state, name: action.payload.value}
+
     case PROPERTIES.PREPARATION_TIME:
       return { ...state, preparation_time: action.payload.value}
+
     case PROPERTIES.TYPE:
       return { ...state, type: action.payload.value}
+
     case PROPERTIES.NO_OF_SLICES:
       state = deleteOptionals(state, 
         [PROPERTIES.SPICINESS_SCALE,
         PROPERTIES.SLICES_OF_BREAD]);
       return { ...state, no_of_slices: action.payload.value}
+
     case PROPERTIES.DIAMETER:
       state = deleteOptionals(state, 
         [PROPERTIES.SPICINESS_SCALE,
         PROPERTIES.SLICES_OF_BREAD]);
       return { ...state, diameter: action.payload.value}
+
     case PROPERTIES.SPICINESS_SCALE:
       state = deleteOptionals(state, 
         [PROPERTIES.NO_OF_SLICES,
         PROPERTIES.DIAMETER,
         PROPERTIES.SLICES_OF_BREAD]);
       return { ...state, spiciness_scale: action.payload.value}
+
     case PROPERTIES.SLICES_OF_BREAD:
       state = deleteOptionals(state, 
         [PROPERTIES.NO_OF_SLICES,
         PROPERTIES.DIAMETER,
         PROPERTIES.SPICINESS_SCALE]);
       return { ...state, slices_of_bread: action.payload.value}
+
     default:
       return state;
   }
@@ -65,42 +73,10 @@ const Form = () => {
 
   const [state, dispatch] = useReducer(reducer, {});
 
-  // const [name, setName] = useState('');
-  // const [preparation_time, setPreparationTime] = useState('');
-  // const [type, setType] = useState('');
-  // const [no_of_slices, setNoOfSlices] = useState(1);
-  // const [diameter, setDiameter] = useState(1);
-  // const [spiciness_scale, setSpicinessScale] = useState(1);
-  // const [slices_of_bread, setSlicesOfBread] = useState(1);
-  // const setters = {
-  //   setName,
-  //   setPreparationTime,
-  //   setType,
-  //   setNoOfSlices,
-  //   setDiameter,
-  //   setSpicinessScale,
-  //   setSlicesOfBread
-  // }
-
-  // const currentDish : typeof Dish = {
-  //   name,
-  //   preparation_time,
-  //   type,
-  //   no_of_slices,
-  //   diameter,
-  //   spiciness_scale,
-  //   slices_of_bread
-  // }
-
   const onSubmit = (e : React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     console.log(state);
   }
-
-  // const onChange = (e : React.ChangeEvent<HTMLInputElement>) => {
-  //   setters["set" + e.target.name](e.target.value);
-  //   console.log();
-  // }
 
   const onChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     let propertyName = e.target.name;
