@@ -64,12 +64,20 @@ const Form = () => {
 
   const [state, dispatch] = useReducer(reducer, {});
 
-  const onSubmit = (e : React.ChangeEvent<HTMLInputElement>) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     console.log(state);
+    fetch("https://umzzcc503l.execute-api.us-west-2.amazonaws.com/dishes/",
+    { method: 'POST', 
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(state),
+    })
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
   }
 
-  const onChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e) => {
     let propertyName = e.target.name;
     let newValue = e.target.value;
     dispatch({ property: propertyName, payload: { value: newValue }})
