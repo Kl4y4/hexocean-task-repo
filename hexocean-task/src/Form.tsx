@@ -85,28 +85,28 @@ const Form = () => {
 
   return <>
     <form onSubmit={onSubmit} id="form">
-    <input name="name" type="text"
-    value={state.name || ""} onChange={onChange} />
-    <input name="preparation_time" type="time" list="preparation-time-suggestions" 
-    step="1" min="00:00:01" 
-    value={state.preparation_time || ""} onChange={onChange} />
-    <select name="type"
-    value={state.type || ""} onChange={onChange}>
-      <option value="pizza">pizza</option>
-      <option value="soup">soup</option>
-      <option value="sandwich">sandwich</option>
-    </select>
+      <input name="name" type="text"
+      value={state.name || ""} onChange={onChange} />
+      <input name="preparation_time" type="time" list="preparation-time-suggestions" 
+      step="1" min="00:00:01" 
+      value={state.preparation_time || ""} onChange={onChange} />
+      <select name="type"
+      value={state.type || ""} onChange={onChange}>
+        <option value="pizza">pizza</option>
+        <option value="soup">soup</option>
+        <option value="sandwich">sandwich</option>
+      </select>
 
-    {state.type == "pizza" && 
-      <>
-        <input name="no_of_slices" type="number" value={state.no_of_slices || ""} onChange={onChange} required />
-        <input name="diameter" type="number" value={state.diameter || ""} onChange={onChange} required />
-      </>
-    }
-    {state.type == "soup" && <input name="spiciness_scale" type="number" value={state.spiciness_scale || ""} onChange={onChange} required />}
-    {state.type == "sandwich" && <input name="slices_of_bread" type="number" value={state.slices_of_bread || ""} onChange={onChange} required />}
+      {state.type == "pizza" && 
+        <>
+          <input name="no_of_slices" type="number" value={state.no_of_slices || ""} onChange={onChange} required />
+          <input name="diameter" type="number" value={state.diameter || ""} onChange={onChange} required />
+        </>
+      }
+      {state.type == "soup" && <input name="spiciness_scale" type="number" value={state.spiciness_scale || ""} onChange={onChange} required />}
+      {state.type == "sandwich" && <input name="slices_of_bread" type="number" value={state.slices_of_bread || ""} onChange={onChange} required />}
 
-    <input type="submit" value="Send" />
+      <input type="submit" value="Send" />
     </form>
   </>
 }
