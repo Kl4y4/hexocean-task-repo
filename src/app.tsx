@@ -2,6 +2,16 @@ const React = window.React;
 const { useState, useReducer } = window.React;
 const { Dish, Pizza, Sandwich, Soup } = window.ts;
 
+const PROPERTIES = {
+  NAME: 'name',
+  PREPARATION_TIME: 'preparation_time',
+  TYPE: 'type',
+  NO_OF_SLICES: 'no_of_slices',
+  DIAMETER: 'diameter',
+  SPICINESS_SCALE: 'spiciness_scale',
+  SLICES_OF_BREAD: 'slices_of_bread',
+}
+
 function deleteOptionals(state, propertiesToDelete) {
   propertiesToDelete.forEach(el => {
     delete state[el];
@@ -11,23 +21,33 @@ function deleteOptionals(state, propertiesToDelete) {
 
 function reducer(state, action) {
   switch (action.property) {
-    case 'name':
+    case PROPERTIES.NAME:
       return { ...state, name: action.payload.value}
-    case 'preparation_time':
+    case PROPERTIES.PREPARATION_TIME:
       return { ...state, preparation_time: action.payload.value}
-    case 'type':
+    case PROPERTIES.TYPE:
       return { ...state, type: action.payload.value}
-    case 'no_of_slices':
-      state = deleteOptionals(state, ['spiciness_scale', 'slices_of_bread']);
+    case PROPERTIES.NO_OF_SLICES:
+      state = deleteOptionals(state, 
+        [PROPERTIES.SPICINESS_SCALE,
+        PROPERTIES.SLICES_OF_BREAD]);
       return { ...state, no_of_slices: action.payload.value}
-    case 'diameter':
-      state = deleteOptionals(state, ['spiciness_scale', 'slices_of_bread']);
+    case PROPERTIES.DIAMETER:
+      state = deleteOptionals(state, 
+        [PROPERTIES.SPICINESS_SCALE,
+        PROPERTIES.SLICES_OF_BREAD]);
       return { ...state, diameter: action.payload.value}
-    case 'spiciness_scale':
-      state = deleteOptionals(state, ['no_of_slices', 'diameter', 'slices_of_bread']);
+    case PROPERTIES.SPICINESS_SCALE:
+      state = deleteOptionals(state, 
+        [PROPERTIES.NO_OF_SLICES,
+        PROPERTIES.DIAMETER,
+        PROPERTIES.SLICES_OF_BREAD]);
       return { ...state, spiciness_scale: action.payload.value}
-    case 'slices_of_bread':
-      state = deleteOptionals(state, ['no_of_slices', 'diameter', 'spiciness_scale']);
+    case PROPERTIES.SLICES_OF_BREAD:
+      state = deleteOptionals(state, 
+        [PROPERTIES.NO_OF_SLICES,
+        PROPERTIES.DIAMETER,
+        PROPERTIES.SPICINESS_SCALE]);
       return { ...state, slices_of_bread: action.payload.value}
     default:
       return state;
