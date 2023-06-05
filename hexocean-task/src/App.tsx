@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from './Form.tsx'
+import ExForm from './ExForm.tsx'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
           Hello world!
         </p>
         <Form />
+        <ExForm />
       </header>
     </div>
   );
