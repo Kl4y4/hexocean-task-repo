@@ -46,45 +46,59 @@ function ExForm() {
 
   return <>
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
-      <input placeholder="Dish name" {...register("name", { minLength: 3 })} />
+      <label>Dish name
+        <input placeholder="..." {...register("name", { minLength: 3, required: true })} />
+      </label>
+      
       {errors.name && 
-        <span className="error-message">This field must be at least 3 characters long!</span>}
+        <span  className="error-message">Must be filled with at least 3 characters!</span>}
 
-      <input type="time" list="preparation-time-suggestions" 
-      step="1" min="00:00:01" 
-      {...register("preparation_time", { required: true })} />
+      <label> Preparation time
+        <input type="time" list="preparation-time-suggestions"
+        step="1" min="00:00:01"
+        {...register("preparation_time", { required: true })} />
+      </label>
 
-      <select {...register("type")}>
-        <option value="pizza">pizza</option>
-        <option value="soup">soup</option>
-        <option value="sandwich">sandwich</option>
-      </select>
+      <label> Dish type
+        <select {...register("type")}>
+          <option value="pizza" selected>Pizza</option>
+          <option value="soup">Soup</option>
+          <option value="sandwich">Sandwich</option>
+        </select>
+      </label>
 
       {type === "pizza" &&
-      <span>
-        <input type="number" step="1" placeholder="# of slices"
-        {...register("no_of_slices", {required: true, min: 1 })} /> <br />
-        <input type="number" placeholder="Diameter"
-        {...register("diameter", {required: true, min: 1 })} />
-      </span>}
+      <>
+        <label> Number of slices
+          <input type="number" step="1"
+          {...register("no_of_slices", {required: true, min: 1 })} />
+        </label>
+        <label> Diameter
+          <input type="number"
+          {...register("diameter", {required: true, min: 1 })} />
+        </label>
+      </>}
 
       {type === "soup" && 
-      <input type="number" list="spiciness_scale_list" step="1"
-        placeholder="Spiciness scale"
-        {...register("spiciness_scale", 
-        {required: true, min: 1, max: 10 })} />}
+      <label> Spiciness scale
+        <input type="number" list="spiciness_scale_list" step="1"
+          {...register("spiciness_scale",
+          {required: true, min: 1, max: 10 })} />
+      </label>}
 
       {type === "sandwich" &&
-        <input type="number" step="1" placeholder="# of slices"
-        {...register("slices_of_bread", {required: true, min: 1 })} />}
+        <label> Slices of bread
+          <input type="number" step="1"
+          {...register("slices_of_bread", {required: true, min: 1 })} />
+        </label>}
 
       {(errors.no_of_slices || errors.diameter || errors.spiciness_scale || errors.slices_of_bread) 
       && <span className="error-message">Required field(s) not filled!</span>}
       
-      <input type="submit" />
+      <input type="submit" value="Submit" />
+      {fetchSuccess
+      && <span style={{ 'text-align': 'center' }}>Form submitted successfully!</span>}
     </form>
-    {fetchSuccess
-    && <span> Form submitted successfully!</span>}
   </>
 }
 
