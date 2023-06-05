@@ -1,14 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
+
+function deleteOptionals(state, propertiesToDelete) {
+  propertiesToDelete.forEach(el => {
+    delete state[el];
+  })
+  return state;
+}
 
 function ExForm() {
 
+  const [fetchSuccess, setFetchSuccess] = useState(false);
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
   const type = watch("type");
 
+  const resetForm = () => {
+    setFetchSuccess(true);
+    let fields = document.querySelectorAll('input');
+    fields.forEach(el => el.value = '');
+  }
+
   const onSubmit = (data) => {
+    switch (data.type) {
+      case 'pizza':
+        data = deleteOptionals(data, ['spiciness_scale', 'slices_of_bread']);
+        break;
+      case 'soup':
+        data = deleteOptionals(data, ['no_of_slices', 'diameter', 'slices_of_bread']);
+        break;
+      case 'sandwich':
+        data = deleteOptionals(data, ['no_of_slices', 'diameter', 'spiciness_scale']);
+        break;
+    }
     console.log(data);
+    fetch("https://umzzcc503l.execute-api.us-west-2.amazonaws.com/dishes/",
+    { method: 'POST', 
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(data),
+    })
+    .then(response => {
+      response.status === 200 && resetForm();
+    })
+    .catch(error => console.log('error', error));
   }
 
   return <>
@@ -32,7 +65,7 @@ function ExForm() {
         <input type="number" step="1" placeholder="# of slices"
         {...register("no_of_slices", {required: true, min: 1 })} /> <br />
         <input type="number" placeholder="Diameter"
-        {...register("diameter", {required: true })} />
+        {...register("diameter", {required: true, min: 1 })} />
       </span>}
 
       {type === "soup" && 
@@ -50,6 +83,8 @@ function ExForm() {
       
       <input type="submit" />
     </form>
+    {fetchSuccess
+    && <span> Form submitted successfully!</span>}
   </>
 }
 
