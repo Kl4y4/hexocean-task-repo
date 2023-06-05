@@ -60,8 +60,8 @@ function ExForm() {
       </label>
 
       <label> Dish type
-        <select {...register("type")}>
-          <option value="pizza" selected>Pizza</option>
+        <select defaultValue="pizza" {...register("type")}>
+          <option value="pizza">Pizza</option>
           <option value="soup">Soup</option>
           <option value="sandwich">Sandwich</option>
         </select>
@@ -74,7 +74,7 @@ function ExForm() {
           {...register("no_of_slices", {required: true, min: 1 })} />
         </label>
         <label> Diameter
-          <input type="number"
+          <input type="number" step="0.1"
           {...register("diameter", {required: true, min: 1 })} />
         </label>
       </>}
@@ -95,9 +95,9 @@ function ExForm() {
       {(errors.no_of_slices || errors.diameter || errors.spiciness_scale || errors.slices_of_bread) 
       && <span className="error-message">Required field(s) not filled!</span>}
       
-      <input type="submit" value="Submit" />
+      <button type="submit">Submit</button>
       {fetchSuccess
-      && <span style={{ 'text-align': 'center' }}>Form submitted successfully!</span>}
+      && <span style={{ 'textAlign': 'center' }}>Form submitted successfully!</span>}
     </form>
   </>
 }
